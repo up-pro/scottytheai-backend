@@ -1,5 +1,4 @@
 export const DB_PORT = 3306;
-export const DEFAULT_TOTAL_TOKEN_AMOUNT = 10;
 export const CHAIN_ID = 1;
 export const RPC_URL = "https://eth.meowrpc.com";
 export const CONTRACT_ADDRESS = "0x6982508145454Ce325dDbE47a25d4ec3d2311933";

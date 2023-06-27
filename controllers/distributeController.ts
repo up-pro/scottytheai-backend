@@ -54,6 +54,7 @@ export const distributeToken = async (req: Request, res: Response) => {
       );
       const tx = await contract.transfer(
         investor,
+
         ethers.utils.parseEther(`${amount}`),
         { from: signer.address }
       );

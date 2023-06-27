@@ -1,7 +1,18 @@
 import { Request, Response } from "express";
-import { DEFAULT_TOTAL_TOKEN_AMOUNT } from "../utils/constants";
 import { getCurrentDateTime } from "../utils/functions";
 const db = require("../utils/db");
+
+// ------------------------------------------------------------------------------------
+
+const TOTAL_TOKEN_AMOUNT_OF_CURRENT_STAGE = process.env
+  .TOTAL_TOKEN_AMOUNT_OF_CURRENT_STAGE
+  ? Number(process.env.TOTAL_TOKEN_AMOUNT_OF_CURRENT_STAGE)
+  : 0;
+const PRESALE_STAGE_NUMBER = process.env.PRESALE_STAGE_NUMBER
+  ? Number(process.env.PRESALE_STAGE_NUMBER)
+  : 1;
+
+// ------------------------------------------------------------------------------------
 
 export const invest = async (req: Request, res: Response) => {
   const { investor, fundTypeId, fundAmount, tokenAmount } = req.body;
@@ -15,7 +26,9 @@ export const invest = async (req: Request, res: Response) => {
       )
     )[0];
     const tokenAmountInfo = (
-      await db.query("SELECT * FROM token_amount_infos;")
+      await db.query("SELECT * FROM token_amount_infos WHERE id = ?;", [
+        PRESALE_STAGE_NUMBER
+      ])
     )[0];
     const claimableTokenOfInvestor = (
       await db.query(
@@ -72,13 +85,16 @@ export const invest = async (req: Request, res: Response) => {
     //  Update the claimed token amount
     if (tokenAmountInfo) {
       await db.query(
-        "UPDATE token_amount_infos SET claimed_token_amount = ? WHERE id = 1;",
-        [tokenAmountInfo.claimed_token_amount + tokenAmount]
+        "UPDATE token_amount_infos SET claimed_token_amount = ? WHERE id = ?;",
+        [
+          tokenAmountInfo.claimed_token_amount + tokenAmount,
+          PRESALE_STAGE_NUMBER
+        ]
       );
     } else {
       await db.query(
-        "INSERT INTO token_amount_infos(claimed_token_amount, total_token_amount) VALUES(?, ?);",
-        [tokenAmount, DEFAULT_TOTAL_TOKEN_AMOUNT]
+        "INSERT INTO token_amount_infos(id, claimed_token_amount, total_token_amount) VALUES(?, ?, ?);",
+        [PRESALE_STAGE_NUMBER, tokenAmount, TOTAL_TOKEN_AMOUNT_OF_CURRENT_STAGE]
       );
     }
     /* ---------------------------------------------------------------------------- */
