@@ -1,17 +1,24 @@
 import express, { Express } from "express";
 import dotenv from "dotenv";
+import cors from "cors";
 
 dotenv.config();
 
 const app: Express = express();
 
+//  Prevent cors error
+app.use(
+  cors({
+    origin: "*"
+  })
+);
+
 // Init Middleware
 app.use(express.json());
 
 // Define Routes
-app.use("/api/invest", require("./routes/investRoutes"));
-app.use("/api/token-amount", require("./routes/tokenAmountRoutes"));
-app.use("/api/distribute", require("./routes/distributeRoutes"));
+app.use("/api/chat", require("./routes/chatRoutes"));
+app.use("/api/ido", require("./routes/idoRoutes"));
 
 const PORT = process.env.PORT || 5000;
 

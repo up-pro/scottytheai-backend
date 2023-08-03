@@ -1,7 +1,7 @@
 {
-  "name": "gaswizard-backend",
+  "name": "scottytheai-backend",
   "version": "1.0.0",
-  "description": "The backend of gaswizard",
+  "description": "The backend of scottytheai",
   "main": "server.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -11,29 +11,28 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mr-new-0509/gaswizard-backend.git"
+    "url": "git+https://github.com/silivex/scottytheai-backend.git"
   },
   "keywords": [
-    "gaswizard",
-    "backend",
-    "express",
-    "typescript",
-    "mysql"
+    "gls"
   ],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/mr-new-0509/gaswizard-backend/issues"
+    "url": "https://github.com/silivex/scottytheai-backend/issues"
   },
-  "homepage": "https://github.com/mr-new-0509/gaswizard-backend#readme",
+  "homepage": "https://github.com/silivex/scottytheai-backend#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "concurrently": "^7.6.0",
     "config": "^3.3.9",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "ethers": "^5.7.2",
     "express": "^4.18.2",
-    "serverless-mysql": "^1.5.4"
+    "jsonwebtoken": "^9.0.0",
+    "mysql2": "^3.5.2",
+    "sequelize": "^6.32.1"
   },
   "devDependencies": {
     "@types/cors": "^2.8.13",
