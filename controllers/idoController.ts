@@ -386,6 +386,22 @@ export const enableSaleStage = async (req: Request, res: Response) => {
 export const updateSaleStage = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
+    const { name, scottyPriceInUsd, hardCap, startAt, endAt } = req.body;
+
+    await IdoSaleStage.update(
+      {
+        name,
+        scotty_price_in_usd: scottyPriceInUsd,
+        hard_cap: hardCap,
+        start_at: startAt,
+        end_at: endAt
+      },
+      {
+        where: { id }
+      }
+    );
+
+    return res.sendStatus(200);
   } catch (error) {
     console.log(">>>>>>>>>>>>>>> error of setPeriodOfSaleStage => ", error);
     return res.sendStatus(500);

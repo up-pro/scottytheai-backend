@@ -10,7 +10,8 @@ import {
   getInvestedTokenRaised,
   getInvestedTokens,
   getSaleData,
-  invest
+  invest,
+  updateSaleStage
 } from "../controllers/idoController";
 
 const router: Router = express.Router();
@@ -34,5 +35,6 @@ router.put("/enable-sale-stage/:id", enableSaleStage);
 router.get("/get-all-sale-stages", getAllSaleStages);
 router.post("/create-sale-stage", createSaleStage);
 router.delete("/delete-sale-stage/:id", deleteSaleStage);
+router.put("/update-sale-stage/:id", updateSaleStage);
 
 module.exports = router;
