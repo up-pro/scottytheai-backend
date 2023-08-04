@@ -456,3 +456,24 @@ export const deleteSaleStage = async (req: Request, res: Response) => {
     return res.sendStatus(500);
   }
 };
+
+/**
+ * Update claim status
+ */
+export const updateClaimStatus = async (req: Request, res: Response) => {
+  try {
+    const { claimScottyEnabled } = req.body;
+    await IdoClaimScottyStatus.update(
+      {
+        claim_scotty_enabled: claimScottyEnabled
+      },
+      {
+        where: { id: 1 }
+      }
+    );
+    return res.sendStatus(200);
+  } catch (error) {
+    console.log(">>>>>>>>>>>>>>> error of updateClaimStatus => ", error);
+    return res.sendStatus(500);
+  }
+};

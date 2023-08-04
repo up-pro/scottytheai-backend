@@ -11,6 +11,7 @@ import {
   getInvestedTokens,
   getSaleData,
   invest,
+  updateClaimStatus,
   updateSaleStage
 } from "../controllers/idoController";
 
@@ -36,5 +37,6 @@ router.get("/get-all-sale-stages", getAllSaleStages);
 router.post("/create-sale-stage", createSaleStage);
 router.delete("/delete-sale-stage/:id", deleteSaleStage);
 router.put("/update-sale-stage/:id", updateSaleStage);
+router.put("/update-claim-status", updateClaimStatus);
 
 module.exports = router;
