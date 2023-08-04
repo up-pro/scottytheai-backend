@@ -236,7 +236,7 @@ export const claimScotty = async (req: Request, res: Response) => {
       //  If investor has the permission to claim SCOTTY
 
       const claimableScottyAmount = Number(
-        idoClaimableScottyAmountOfInvestorData
+        idoClaimableScottyAmountOfInvestorData.claimable_scotty_amount
       );
 
       if (claimableScottyAmount < scottyAmount) {
@@ -355,23 +355,41 @@ export const getSaleData = async (req: Request, res: Response) => {
   }
 };
 
+/**
+ * Disable a sale stage
+ */
+export const disableSaleStage = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    await IdoSaleStage.update({ enabled: "false" }, { where: { id } });
+    return res.sendStatus(200);
+  } catch (error) {
+    console.log(">>>>>>>>>>>>>>> error of disableSaleStage => ", error);
+    return res.sendStatus(500);
+  }
+};
+
 /* ---------------------------------------------- Admin --------------------------------------------------- */
 
 /**
  * Enable a sale stage
  */
-export const enableSaleStage = async (req: Request, res: Response) => {
+export const updateStatusOfSaleStage = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
+    const { newStatus } = req.body;
 
-    //  Disable the previous sale stage whose id is enabledStageId
-    await IdoSaleStage.update(
-      { enabled: "false" },
-      { where: { enabled: "true" } }
-    );
+    if (newStatus === "true") {
+      //  Disable the previous sale stage whose id is enabledStageId
+      await IdoSaleStage.update(
+        { enabled: "false" },
+        { where: { enabled: "true" } }
+      );
 
-    //  Enable the sale stage whose id is id.
-    await IdoSaleStage.update({ enabled: "true" }, { where: { id } });
+      //  Enable the sale stage whose id is id.
+    }
+
+    await IdoSaleStage.update({ enabled: newStatus }, { where: { id } });
 
     return res.sendStatus(200);
   } catch (error) {

@@ -1,8 +1,9 @@
 import express, { Router } from "express";
 import {
+  claimScotty,
   createSaleStage,
   deleteSaleStage,
-  enableSaleStage,
+  disableSaleStage,
   getAllSaleStages,
   getClaimScottyStatus,
   getClaimableScottyAmountOfInvestor,
@@ -12,7 +13,8 @@ import {
   getSaleData,
   invest,
   updateClaimStatus,
-  updateSaleStage
+  updateSaleStage,
+  updateStatusOfSaleStage
 } from "../controllers/idoController";
 
 const router: Router = express.Router();
@@ -30,9 +32,11 @@ router.get(
   getInvestedTokenRaised
 );
 router.get("/get-sale-data/:investedTokenId", getSaleData);
+router.post("/claim-scotty", claimScotty);
+router.put("/disable-sale-stage/:id", disableSaleStage);
 
 //  Admin
-router.put("/enable-sale-stage/:id", enableSaleStage);
+router.put("/update-status-of-sale-stage/:id", updateStatusOfSaleStage);
 router.get("/get-all-sale-stages", getAllSaleStages);
 router.post("/create-sale-stage", createSaleStage);
 router.delete("/delete-sale-stage/:id", deleteSaleStage);
