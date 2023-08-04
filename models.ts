@@ -68,8 +68,8 @@ export const IdoSaleStage = sequelize.define(
     scotty_price_in_usd: DataTypes.DECIMAL,
     hard_cap: DataTypes.DECIMAL,
     claimed_scotty_amount: DataTypes.DECIMAL,
-    start_at: DataTypes.INTEGER,
-    end_at: DataTypes.INTEGER
+    start_at: DataTypes.BIGINT,
+    end_at: DataTypes.BIGINT
   },
   { timestamps: false }
 );

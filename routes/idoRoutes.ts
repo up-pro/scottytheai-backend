@@ -1,6 +1,8 @@
 import express, { Router } from "express";
 import {
+  createSaleStage,
   enableSaleStage,
+  getAllSaleStages,
   getClaimScottyStatus,
   getClaimableScottyAmountOfInvestor,
   getEnabledSaleStage,
@@ -28,5 +30,7 @@ router.get("/get-sale-data/:investedTokenId", getSaleData);
 
 //  Admin
 router.put("/enable-sale-stage/:id", enableSaleStage);
+router.get("/get-all-sale-stages", getAllSaleStages);
+router.post("/create-sale-stage", createSaleStage);
 
 module.exports = router;

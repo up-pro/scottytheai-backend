@@ -14,6 +14,8 @@ import {
   RPC_URL
 } from "../utils/constants";
 
+const OWNER_WALLET = process.env.OWNER_WALLET || "";
+
 /**
  * Invest ETH or USDT to claim SCOTTY
  */
@@ -361,12 +363,11 @@ export const getSaleData = async (req: Request, res: Response) => {
 export const enableSaleStage = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const { enabledStageId } = req.body;
 
     //  Disable the previous sale stage whose id is enabledStageId
     await IdoSaleStage.update(
       { enabled: "false" },
-      { where: { id: enabledStageId } }
+      { where: { enabled: "true" } }
     );
 
     //  Enable the sale stage whose id is id.
@@ -379,13 +380,49 @@ export const enableSaleStage = async (req: Request, res: Response) => {
   }
 };
 
-
-export const setPeriodOfSaleStage = async (req: Request, res: Response) => {
+/**
+ * Update a sale stage
+ */
+export const updateSaleStage = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-
   } catch (error) {
     console.log(">>>>>>>>>>>>>>> error of setPeriodOfSaleStage => ", error);
+    return res.sendStatus(500);
+  }
+};
+
+/**
+ * Get all sale stages
+ */
+export const getAllSaleStages = async (req: Request, res: Response) => {
+  try {
+    const saleStages = await IdoSaleStage.findAll();
+    return res.send(saleStages);
+  } catch (error) {
+    console.log(">>>>>>>>>>>>>>> error of getAllSaleStages => ", error);
+    return res.sendStatus(500);
+  }
+};
+
+/**
+ * Create a new sale stage
+ */
+export const createSaleStage = async (req: Request, res: Response) => {
+  try {
+    const { name, scottyPriceInUsd, hardCap, startAt, endAt } = req.body;
+    await IdoSaleStage.create({
+      name,
+      scotty_price_in_usd: scottyPriceInUsd,
+      claimed_scotty_amount: 0,
+      enabled: 'false',
+      hard_cap: hardCap,
+      start_at: startAt,
+      end_at: endAt
+    });
+    return res.sendStatus(200);
+  } catch (error) {
+    console.log(">>>>>>>>>>>>>>> error of createSaleStage => ", error);
     return res.sendStatus(500);
   }
 };
