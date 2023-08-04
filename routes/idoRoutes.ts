@@ -1,6 +1,7 @@
 import express, { Router } from "express";
 import {
   createSaleStage,
+  deleteSaleStage,
   enableSaleStage,
   getAllSaleStages,
   getClaimScottyStatus,
@@ -32,5 +33,6 @@ router.get("/get-sale-data/:investedTokenId", getSaleData);
 router.put("/enable-sale-stage/:id", enableSaleStage);
 router.get("/get-all-sale-stages", getAllSaleStages);
 router.post("/create-sale-stage", createSaleStage);
+router.delete("/delete-sale-stage/:id", deleteSaleStage);
 
 module.exports = router;

@@ -415,14 +415,28 @@ export const createSaleStage = async (req: Request, res: Response) => {
       name,
       scotty_price_in_usd: scottyPriceInUsd,
       claimed_scotty_amount: 0,
-      enabled: 'false',
+      enabled: "false",
       hard_cap: hardCap,
       start_at: startAt,
       end_at: endAt
     });
-    return res.sendStatus(200);
+    return res.sendStatus(201);
   } catch (error) {
     console.log(">>>>>>>>>>>>>>> error of createSaleStage => ", error);
+    return res.sendStatus(500);
+  }
+};
+
+/**
+ * Delete sale stage
+ */
+export const deleteSaleStage = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    await IdoSaleStage.destroy({ where: { id } });
+    return res.sendStatus(200);
+  } catch (error) {
+    console.log(">>>>>>>>>>>>>>> error of deleteSaleStage => ", error);
     return res.sendStatus(500);
   }
 };
