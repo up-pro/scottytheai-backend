@@ -33,7 +33,7 @@ export const IdoClaimableScottyAmountOfInvestor = sequelize.define(
   "ido_claimable_scotty_amount_of_investors",
   {
     investor_wallet_address: DataTypes.STRING,
-    claimable_scotty_amount: DataTypes.DECIMAL
+    claimable_scotty_amount: DataTypes.DOUBLE
   },
   { timestamps: false }
 );
@@ -53,8 +53,8 @@ export const IdoInvestment = sequelize.define(
   {
     investor_wallet_address: DataTypes.STRING,
     id_invested_token: DataTypes.INTEGER,
-    invested_token_amount: DataTypes.DECIMAL,
-    scotty_amount: DataTypes.DECIMAL,
+    invested_token_amount: DataTypes.DOUBLE,
+    scotty_amount: DataTypes.DOUBLE,
     id_sale_stage: DataTypes.INTEGER
   },
   { timestamps: true }
@@ -65,9 +65,9 @@ export const IdoSaleStage = sequelize.define(
   {
     name: DataTypes.STRING,
     enabled: DataTypes.STRING,
-    scotty_price_in_usd: DataTypes.DECIMAL,
-    hard_cap: DataTypes.DECIMAL,
-    claimed_scotty_amount: DataTypes.DECIMAL,
+    scotty_price_in_usd: DataTypes.DOUBLE,
+    hard_cap: DataTypes.DOUBLE,
+    claimed_scotty_amount: DataTypes.DOUBLE,
     start_at: DataTypes.BIGINT,
     end_at: DataTypes.BIGINT
   },
