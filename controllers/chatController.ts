@@ -111,13 +111,3 @@ export const updateTitleOfChatHistory = async (req: Request, res: Response) => {
   }
 };
 
-export const getMessagesByChatHistoryId = async (
-  req: Request,
-  res: Response
-) => {
-  try {
-  } catch (error) {
-    console.log(">>>>>>>>>>>> error of getMessagesByChatHistoryId => ", error);
-    return res.sendStatus(500);
-  }
-};
