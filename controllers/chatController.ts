@@ -25,7 +25,7 @@ export const createChatHistory = async (req: Request, res: Response) => {
       order: [["updated_at", "DESC"]]
     });
 
-    return res.send({ createdChatHistoryId: newChatHistory.id, chatHistories });
+    return res.send({ createdChatHistory: newChatHistory, chatHistories });
   } catch (error) {
     console.log(">>>>>>>>>>>> error of createChatHistory => ", error);
     return res.sendStatus(500);
@@ -87,8 +87,24 @@ export const getChatHistories = async (req: Request, res: Response) => {
   }
 };
 
+//  Update the title of a chat history
 export const updateTitleOfChatHistory = async (req: Request, res: Response) => {
   try {
+    const { id } = req.params;
+    const { title } = req.body;
+    console.log(">>>>>>>>>>> id => ", id);
+    console.log(">>>>>>>>>>> title => ", title);
+    await ChatHistory.update(
+      {
+        title: title
+      },
+      {
+        where: {
+          id
+        }
+      }
+    );
+    return res.sendStatus(200);
   } catch (error) {
     console.log(">>>>>>>>>>>> error of getChatHistories => ", error);
     return res.sendStatus(500);
