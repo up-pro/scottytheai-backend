@@ -9,7 +9,7 @@ const DB_HOST = process.env.DB_HOST || "";
 
 // ---------------------------------------------------------------------------------------------
 
-const sequelize = new Sequelize(DB_NAME, DB_USERNAME, DB_PASSWORD, {
+export const sequelize = new Sequelize(DB_NAME, DB_USERNAME, DB_PASSWORD, {
   host: DB_HOST,
   dialect: "mysql",
   define: { freezeTableName: true, underscored: true }

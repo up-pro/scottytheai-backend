@@ -4,7 +4,8 @@ import {
   IdoClaimableScottyAmountOfInvestor,
   IdoInvestedToken,
   IdoInvestment,
-  IdoSaleStage
+  IdoSaleStage,
+  sequelize
 } from "../models";
 import { ethers } from "ethers";
 import {
@@ -13,6 +14,7 @@ import {
   CONTRACT_ADDRESS,
   RPC_URL
 } from "../utils/constants";
+import { Sequelize } from "sequelize";
 
 const OWNER_WALLET = process.env.OWNER_WALLET || "";
 
@@ -334,6 +336,18 @@ export const getSaleData = async (req: Request, res: Response) => {
   try {
     const { investedTokenId } = req.params;
 
+    const [raisedAmountByInvestedToken] = await sequelize.query(`
+      SELECT ido_invested_tokens.id,
+        ido_invested_tokens.token_name AS invested_token_name, 
+        ido_invested_tokens.token_symbol AS invested_token_symbol,
+        t.invested_token_amount
+      FROM ido_invested_tokens
+      LEFT JOIN (
+        SELECT SUM(ido_investments.invested_token_amount) AS invested_token_amount, ido_investments.id_invested_token FROM ido_investments GROUP BY ido_investments.id_invested_token
+      ) t 
+      ON t.id_invested_token = ido_invested_tokens.id;
+    `);
+
     const raisedAmount = await IdoInvestment.sum("invested_token_amount", {
       where: { id_invested_token: investedTokenId }
     });
@@ -345,6 +359,7 @@ export const getSaleData = async (req: Request, res: Response) => {
     });
 
     return res.send({
+      raisedAmountByInvestedToken,
       raisedAmount,
       enabledSaleStage,
       claimScottyStatusData
